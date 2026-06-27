@@ -1,0 +1,96 @@
+---
+const faqs = [
+  {
+    q: 'ビジネス目的で参加しても良いですか？',
+    a: 'もちろんです。ただし、ちよつなはビジネスだけの場ではありません。趣味やチャリティーにも関わっていただくことで、より深い信頼関係が生まれ、結果としてビジネスの成果にもつながります。',
+  },
+  {
+    q: '強引な勧誘やMLMが心配です。',
+    a: 'ご安心ください。ちよつなはイエローカード・レッドカード制を採用しており、強引な勧誘には警告と退会の措置をとります。主催者もホワイトリスト制で審査されています。',
+  },
+  {
+    q: '一人で参加しても大丈夫ですか？',
+    a: 'ほとんどの方が一人で参加されています。運営メンバーが積極的にサポートしますので、お気軽にお越しください。',
+  },
+  {
+    q: '英語が話せなくても参加できますか？',
+    a: 'もちろん大丈夫です。すべてのイベントは日本語で進行しますし、英語が必要な場面では日英バイリンガルの運営メンバーがサポートします。',
+  },
+  {
+    q: 'オンラインだけの参加もできますか？',
+    a: 'はい。多くのイベントはオンライン参加も可能で、全国・海外からご参加いただけます。',
+  },
+  {
+    q: '多忙なので、毎月参加するのは難しいです。',
+    a: 'ご都合の良い時にご参加ください。3軸の複数イベントに参加するほど会費が下がる仕組みですが、参加頻度はご自由です。',
+  },
+  {
+    q: '退会はいつでもできますか？',
+    a: 'はい、いつでも可能です。',
+  },
+];
+---
+
+<section id="faq" class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + H2（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        FAQ / よくある質問
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        FAQ
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.25] tracking-tight text-ink-900">
+        よくある質問
+      </h2>
+    </div>
+
+    {/*
+      Q&A：質問を `font-mincho` 24-32px、回答を `font-gothic` 15px。
+      `.editorial-rule-double` で各 Q&A を区切る。card 均等並びと角丸 toggle を排除。
+    */}
+    <div class="col-span-12 mt-16 md:col-start-2 md:col-span-10 md:mt-20">
+      <hr class="editorial-rule-double" aria-hidden="true" />
+      {
+        faqs.map((faq, idx) => {
+          const num = String(idx + 1).padStart(2, '0');
+          return (
+            <details class="group border-b border-ink-200 py-7">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+                <div class="flex flex-1 items-start gap-5">
+                  <span
+                    class="font-serif-en mt-1 shrink-0 text-[11px] uppercase tracking-[0.18em] text-ink-400"
+                    aria-hidden="true"
+                  >
+                    Q. {num}
+                  </span>
+                  <span class="font-mincho text-[20px] leading-[1.5] tracking-tight text-ink-900 sm:text-[24px] md:text-[28px]">
+                    {faq.q}
+                  </span>
+                </div>
+                <span
+                  class="editorial-mark mt-1 shrink-0 text-ink-700 transition group-open:rotate-45 group-open:border-brand group-open:text-brand"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
+              </summary>
+              <div class="mt-5 flex gap-5 pl-1">
+                <span
+                  class="font-serif-en mt-0.5 shrink-0 text-[11px] uppercase tracking-[0.18em] text-ink-400"
+                  aria-hidden="true"
+                >
+                  A.
+                </span>
+                <p class="font-gothic max-w-3xl text-[15px] leading-[1.95] text-ink-700">
+                  {faq.a}
+                </p>
+              </div>
+            </details>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

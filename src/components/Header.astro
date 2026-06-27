@@ -1,0 +1,344 @@
+---
+import { links } from '../lib/links';
+
+const navItems = [
+  { href: '#about', label: 'ちよつなとは' },
+  { href: '#stories', label: '事例' },
+  { href: '#trust', label: '安心の仕組み' },
+  { href: '#activities', label: '活動内容' },
+  { href: '#summit', label: 'サミット' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+{/*
+  編集デザイン Header — `border-double` で底部に 2 本の罫線を引き、
+  ベタ塗り境界を排する（要件 2.7）。中央寄せ要素を持たず左右で分節する。
+  右下端の縦罫線（BaseLayout の `.editorial-rule-vertical`）と接続する視覚開始点。
+*/}
+<header class="sticky top-0 z-50 border-b-[3px] border-double border-ink-300/60 bg-page/85 backdrop-blur">
+  <div class="container-narrow flex h-16 items-center justify-between gap-4">
+    {/* 左ブロック：ロゴ + 千代田エリアサイン（要件 7.2：Header 拠点）。 */}
+    <div class="flex items-center gap-5">
+      <a href="#top" class="flex shrink-0 items-baseline gap-2">
+        <span class="font-mincho text-xl font-bold tracking-tight text-ink-900">
+          ちよつな
+        </span>
+        <span class="hidden text-[11px] tracking-[0.12em] text-ink-500 lg:inline">
+          東京・千代田つながりの場
+        </span>
+      </a>
+      <span
+        class="hidden font-serif-en items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-ink-500 lg:inline-flex"
+        aria-hidden="true"
+      >
+        <span class="block h-px w-8 bg-ink-300"></span>
+        Kanda · Otemachi · Akihabara
+      </span>
+    </div>
+
+    {/* 右ブロック：ナビ + テーマトグル + CTA + ハンバーガー */}
+    <div class="flex items-center gap-4 lg:gap-6">
+      <nav class="hidden items-center gap-6 lg:flex" aria-label="メインナビゲーション">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              data-nav-target={item.href}
+              class="nav-link font-gothic text-sm tracking-[0.04em] text-ink-600 transition hover:text-ink-900"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div
+        id="theme-toggle"
+        role="group"
+        aria-label="カラーパレットを切り替え"
+        class="flex items-center gap-1 rounded-full border border-ink-200 bg-white p-1 shadow-sm"
+      >
+        <button
+          type="button"
+          class="theme-btn is-active"
+          data-theme="blue-gold"
+          aria-pressed="true"
+        >
+          Blue & Gold
+        </button>
+        <button
+          type="button"
+          class="theme-btn"
+          data-theme="mint"
+          aria-pressed="false"
+        >
+          Mint Modern
+        </button>
+      </div>
+
+      {/* サミット参加 CTA：rounded-full の典型 UI を排し、編集デザイン的な角張った形状に。 */}
+      <a
+        href={links.summit}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-gothic hidden items-center gap-2 bg-brand px-5 py-2.5 text-xs font-semibold text-white shadow-sm shadow-brand/20 transition hover:bg-brand-dark hover:shadow hover:shadow-brand/30 sm:inline-flex sm:text-sm"
+      >
+        サミット参加
+      </a>
+
+      <button
+        type="button"
+        id="mobile-nav-toggle"
+        class="inline-flex h-10 w-10 items-center justify-center border border-ink-300 text-ink-700 transition hover:bg-ink-50 lg:hidden"
+        aria-label="ナビゲーションを開閉"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="h-5 w-5" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!--
+  モバイルドロワーは `<header>` 外に置く。`<header>` の `backdrop-blur`
+  （= `backdrop-filter`）は position:fixed 子孫の containing block を
+  生成してしまい、ドロワーが viewport ではなくヘッダー高（64px）に
+  対して相対配置されて潰れる。ハンバーガーボタンとは getElementById
+  で結ばれるため、DOM の階層分離はスクリプト挙動に影響しない。
+-->
+<div
+  id="mobile-drawer"
+  class="fixed inset-0 z-[60] lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="ナビゲーションメニュー"
+  data-state="closed"
+>
+  <div
+    id="mobile-drawer-overlay"
+    class="absolute inset-0 bg-ink-900/60"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="absolute right-0 top-0 flex h-full w-full max-w-xs flex-col bg-page shadow-2xl">
+    <div class="flex h-16 items-center justify-between border-b-[3px] border-double border-ink-300/60 bg-page px-5">
+      <span class="font-mincho text-base font-bold text-ink-900">メニュー</span>
+      <button
+        type="button"
+        id="mobile-nav-close"
+        class="inline-flex h-10 w-10 items-center justify-center border border-ink-300 bg-page text-ink-700 transition hover:bg-ink-50"
+        aria-label="ナビゲーションを閉じる"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="h-5 w-5" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+          <line x1="6" y1="18" x2="18" y2="6"></line>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-1 flex-col gap-0 overflow-y-auto bg-page p-5" aria-label="モバイルナビゲーション">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            data-nav-target={item.href}
+            class="nav-link font-gothic border-l-2 border-ink-200/50 px-4 py-4 text-base text-ink-700 transition hover:border-ink-800 hover:bg-ink-50"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href={links.summit}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-gothic mt-6 inline-flex w-full items-center justify-center gap-2 bg-brand px-6 py-4 text-sm font-semibold text-white shadow-md shadow-brand/20 transition hover:bg-brand-dark"
+      >
+        サミット参加
+      </a>
+    </nav>
+  </div>
+</div>
+
+<style>
+  /* ドロワー初期状態は非表示。data-state="open" で表示する。 */
+  #mobile-drawer[data-state="closed"] {
+    display: none;
+  }
+  #mobile-drawer[data-state="open"] {
+    display: block;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var current = root.dataset.theme === 'mint' ? 'mint' : 'blue-gold';
+    var buttons = document.querySelectorAll('#theme-toggle .theme-btn');
+
+    function apply(theme) {
+      root.dataset.theme = theme;
+      try { localStorage.setItem('theme', theme); } catch (e) {}
+      buttons.forEach(function (btn) {
+        var active = btn.dataset.theme === theme;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        apply(btn.dataset.theme);
+      });
+    });
+
+    apply(current);
+  })();
+</script>
+
+<script is:inline>
+  // モバイルナビ: 開閉・フォーカス・body スクロール抑止（position-fixed 方式）
+  (function () {
+    try {
+      var toggle = document.getElementById('mobile-nav-toggle');
+      var drawer = document.getElementById('mobile-drawer');
+      var overlay = document.getElementById('mobile-drawer-overlay');
+      var closeBtn = document.getElementById('mobile-nav-close');
+      if (!toggle || !drawer || !overlay || !closeBtn) return;
+
+      var isOpen = false;
+      var savedScrollY = 0;
+      var savedBodyStyle = {
+        position: '',
+        top: '',
+        left: '',
+        right: '',
+        width: ''
+      };
+
+      function lockBody() {
+        savedScrollY = window.scrollY || window.pageYOffset || 0;
+        savedBodyStyle.position = document.body.style.position;
+        savedBodyStyle.top = document.body.style.top;
+        savedBodyStyle.left = document.body.style.left;
+        savedBodyStyle.right = document.body.style.right;
+        savedBodyStyle.width = document.body.style.width;
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + savedScrollY + 'px';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+      }
+
+      function unlockBody() {
+        document.body.style.position = savedBodyStyle.position;
+        document.body.style.top = savedBodyStyle.top;
+        document.body.style.left = savedBodyStyle.left;
+        document.body.style.right = savedBodyStyle.right;
+        document.body.style.width = savedBodyStyle.width;
+        window.scrollTo(0, savedScrollY);
+      }
+
+      function open() {
+        if (isOpen) return;
+        isOpen = true;
+        drawer.setAttribute('data-state', 'open');
+        toggle.setAttribute('aria-expanded', 'true');
+        lockBody();
+        var firstLink = drawer.querySelector('nav a');
+        if (firstLink) {
+          try { firstLink.focus(); } catch (e) {}
+        }
+      }
+
+      function close() {
+        if (!isOpen) return;
+        isOpen = false;
+        drawer.setAttribute('data-state', 'closed');
+        toggle.setAttribute('aria-expanded', 'false');
+        unlockBody();
+        try { toggle.focus(); } catch (e) {}
+      }
+
+      toggle.addEventListener('click', function () {
+        if (isOpen) close(); else open();
+      });
+      overlay.addEventListener('click', close);
+      closeBtn.addEventListener('click', close);
+      drawer.querySelectorAll('nav a').forEach(function (a) {
+        a.addEventListener('click', close);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape' || e.key === 'Esc') {
+          close();
+        }
+      });
+    } catch (e) {
+      // 例外時は通常のリンク遷移にフォールバック
+      try { console.warn('mobile-nav init failed:', e); } catch (_) {}
+    }
+  })();
+</script>
+
+<script is:inline>
+  // scroll-spy: IntersectionObserver で現在セクションを判定し、
+  // PC ／ モバイル双方のナビリンクに `.is-active` を付与する。
+  // rootMargin の上端 64px は global.css の `scroll-padding-top: 4rem` と
+  // ヘッダー高 `h-16` (= 4rem = 64px) に同期させること。
+  (function () {
+    try {
+      if (!('IntersectionObserver' in window)) return;
+      var targets = ['#about', '#stories', '#trust', '#activities', '#summit', '#faq'];
+      var sections = [];
+      targets.forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (el) sections.push(el);
+      });
+      if (sections.length === 0) return;
+
+      var entriesMap = new Map();
+      var activeId = null;
+
+      function applyActive(id) {
+        if (id === activeId) return;
+        activeId = id;
+        var hash = '#' + id;
+        document.querySelectorAll('.nav-link[data-nav-target]').forEach(function (a) {
+          var on = a.getAttribute('data-nav-target') === hash;
+          a.classList.toggle('is-active', on);
+        });
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entriesMap.set(entry.target.id, entry);
+        });
+        var visible = [];
+        entriesMap.forEach(function (entry) {
+          if (entry.isIntersecting) visible.push(entry);
+        });
+        if (visible.length === 0) return;
+        var pick = visible[0];
+        for (var i = 1; i < visible.length; i++) {
+          if (visible[i].target.offsetTop > pick.target.offsetTop) {
+            pick = visible[i];
+          }
+        }
+        applyActive(pick.target.id);
+      }, {
+        rootMargin: '-64px 0px -50% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(function (s) { observer.observe(s); });
+    } catch (e) {
+      try { console.warn('scroll-spy init failed:', e); } catch (_) {}
+    }
+  })();
+</script>

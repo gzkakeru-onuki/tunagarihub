@@ -1,0 +1,129 @@
+---
+const categories = [
+  {
+    icon: '🤝',
+    enLabel: 'Networking Events',
+    title: '交流イベント',
+    body:
+      '経営者・クリエイター・専門家が集まる、月例のサミットや少人数の懇親会。',
+  },
+  {
+    icon: '📚',
+    enLabel: 'Learning & Seminars',
+    title: '学び・セミナー',
+    body:
+      'ビジネス・テクノロジー・マインドフルネスなど、多彩なテーマの学びの場。',
+  },
+  {
+    icon: '🚀',
+    enLabel: 'Co-Creation Projects',
+    title: '共創プロジェクト',
+    body:
+      'メンバー同士が立ち上げる新規事業、コラボレーション、社会課題への取り組み。',
+  },
+  {
+    icon: '❤️',
+    enLabel: 'Charity Activities',
+    title: 'チャリティー活動',
+    body:
+      'NPOとの連携、寄付活動、ボランティア参加など、社会貢献の機会を提供。',
+  },
+];
+
+// 千代田の地名タグ（要件 7.2）：4 つの活動それぞれにエリアを割り当てる。
+const areaTags = ['Kanda', 'Otemachi', 'Akihabara', 'Imperial Palace'];
+
+// 4 件を非対称段差配置（要件 2.3 / 9.6）。
+const placements = [
+  'md:col-span-7 md:col-start-1',
+  'md:col-span-4 md:col-start-9 md:mt-12',
+  'md:col-span-5 md:col-start-2 md:mt-8',
+  'md:col-span-6 md:col-start-7 md:mt-6',
+];
+---
+
+<section id="activities" class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + H2 + lead（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Activities / 千代田で起きていること
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        活動内容
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.25] tracking-tight text-ink-900">
+        4つのカテゴリで、<br class="sm:hidden" />毎月10以上のイベントを開催しています。
+      </h2>
+    </div>
+
+    {/*
+      4 件の活動：列幅 7 / 4 / 5 / 6 と縦オフセットを意図的に変える非対称構成。
+      各組には千代田のエリアタグを `font-serif-en` の小型フォントで添付（要件 7.2）。
+      角丸ボタン+白アイコンの典型 UI を排し、`.editorial-mark` でモノラインアイコン枠に。
+    */}
+    <div class="col-span-12 mt-20 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-28">
+      {
+        categories.map((cat, idx) => {
+          const place = placements[idx];
+          const area = areaTags[idx];
+          const num = String(idx + 1).padStart(2, '0');
+          return (
+            <article class={`col-span-12 ${place}`}>
+              <div class="flex items-center justify-between">
+                <p class="font-serif-en text-[12px] uppercase tracking-[0.32em] text-brand">
+                  {num} / {cat.enLabel}
+                </p>
+                <span
+                  class="font-serif-en text-[10px] uppercase tracking-[0.3em] text-ink-400"
+                  aria-hidden="true"
+                >
+                  {area}
+                </span>
+              </div>
+              <hr class="editorial-rule-double mt-4" aria-hidden="true" />
+              <div class="mt-7 flex items-baseline gap-4">
+                <span
+                  class="editorial-mark font-serif-en text-[14px] text-ink-700"
+                  aria-hidden="true"
+                >
+                  {idx + 1}
+                </span>
+                <h3 class="font-mincho text-xl tracking-tight text-ink-900 sm:text-2xl md:text-[28px]">
+                  {cat.title}
+                </h3>
+              </div>
+              <p class="font-gothic mt-5 text-[15px] leading-[1.85] text-ink-700">
+                {cat.body}
+              </p>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    {/*
+      Phase 1（要件 6 / Image Rollout 戦略）：実イベント写真の暫定枠。
+      モノクロ + アクセント色 1 色オーバーレイ（要件 7.4）を `.editorial-photo` で実現。
+      Phase 2 で運営側が実イベント写真にファイル本体のみを差し替える運用とする。
+    */}
+    <figure class="col-span-12 mt-20 md:col-start-3 md:col-span-8 md:mt-28">
+      <div class="editorial-photo">
+        <img
+          src="/images/event-1.jpg"
+          alt="ちよつなのイベントで参加者が集まる様子（Phase 1 暫定画像）"
+          width="896"
+          height="1195"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="font-serif-en mt-5 text-[12px] uppercase tracking-[0.2em] text-ink-500">
+        Photo 01 — Kanda · Otemachi · Akihabara, Tokyo Chiyoda
+      </figcaption>
+      <p class="font-gothic mt-3 text-[13px] leading-[1.7] text-ink-500">
+        ちよつなで開催される交流の一場面（実素材は順次差し替え予定）
+      </p>
+    </figure>
+  </div>
+</section>

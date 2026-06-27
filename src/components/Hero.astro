@@ -1,0 +1,144 @@
+---
+import { links } from '../lib/links';
+---
+
+<section
+  id="top"
+  class="editorial-section--lg relative overflow-hidden bg-hero-from text-hero-fg"
+>
+  {/*
+    3 軸の円シルエット（要件 7.1 起点）。AI サイト的な blur orb による紫/青ベタの
+    グラデ装飾を排し、ブランド表現の SVG 3 円に置き換える。
+  */}
+  <svg
+    class="pointer-events-none absolute right-[6vw] top-[10vh] hidden md:block"
+    width="320"
+    height="320"
+    viewBox="0 0 320 320"
+    aria-hidden="true"
+  >
+    <circle cx="120" cy="110" r="90" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+    <circle cx="200" cy="110" r="90" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+    <circle cx="160" cy="190" r="90" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+  </svg>
+
+  {/*
+    縦書きキャッチ：ページ全体の縦書き使用 1〜2 箇所のうち 1 箇所目（要件 5.1）。
+  */}
+  <div
+    class="editorial-vertical-text pointer-events-none absolute right-[2vw] top-1/2 hidden -translate-y-1/2 text-[12px] tracking-[0.3em] text-hero-fg/55 md:block"
+    aria-hidden="true"
+  >
+    千代田 編集 共創
+  </div>
+
+  <div class="editorial-grid relative">
+    {/* eyebrow ラベル：欧文 + 和文の二段。中央寄せヒーローを排す（要件 2.4/9.1）。 */}
+    <p
+      class="font-serif-en col-span-12 mb-10 inline-block text-[11px] uppercase tracking-[0.32em] text-hero-fg/70 md:col-span-6 md:mb-16"
+    >
+      Tokyo, Chiyoda
+      <span class="mx-2 text-hero-fg/35">/</span>
+      <span class="font-mincho normal-case tracking-[0.16em] text-hero-fg/85">
+        東京・千代田つながりの場 ―― ちよつな
+      </span>
+    </p>
+
+    {/*
+      グリッド破り（要件 2.2/9.3）：H1 を 12 カラム全幅に伸ばし、右側パディングを
+      負マージンで相殺して画面端まで貫通させる。data-stagger 親で行単位 reveal を
+      構成（要件 6.2）。コピー文字列は frontmatter の原文を保持する。
+    */}
+    <h1
+      data-stagger
+      class="font-mincho col-span-12 leading-[1.05] tracking-tight text-hero-fg"
+      style="grid-column: 1 / -1; margin-right: calc(-1 * clamp(20px, 4vw, 64px)); font-size: clamp(48px, 8vw, 96px);"
+    >
+      <span class="block">
+        ゴルフ仲間との一言から、
+      </span>
+      <span class="block text-hero-accent">
+        NPOへの寄付が決まった。
+      </span>
+      <span class="mt-2 block">
+        趣味のイベントで出会った人と、
+      </span>
+      <span class="block text-hero-accent">
+        アプリを共創した。
+      </span>
+      <span
+        class="mt-8 block text-hero-fg/85"
+        style="font-size: clamp(20px, 2.4vw, 30px); line-height: 1.5;"
+      >
+        ―― ここでは、こんなことが日常です。
+      </span>
+    </h1>
+
+    <p
+      class="font-gothic col-span-12 mt-12 max-w-xl text-[15px] leading-[1.9] text-hero-fg/85 md:col-start-2 md:col-span-7"
+    >
+      ビジネス × 趣味 × チャリティーの共創コミュニティ。<br />
+      人と人のつながりから、未来を共に創る。
+    </p>
+
+    {/*
+      CTA：左揃え横並び。`.cta-anchor-left` で中央配置を機械的に禁止（要件 2.5/9.2）。
+      角丸ボタン+白アイコンの典型 UI を排し、編集デザイン的な角張った形状に。
+    */}
+    <div
+      class="cta-anchor-left col-span-12 mt-10 flex flex-col gap-4 md:col-start-2 md:col-span-9 md:flex-row md:items-stretch"
+    >
+      <a
+        href={links.summit}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-gothic inline-flex items-center justify-start gap-3 bg-hero-cta px-8 py-4 text-sm font-semibold text-hero-cta-text shadow-md shadow-hero-cta/30 transition hover:bg-hero-cta-hover hover:shadow-lg hover:shadow-hero-cta/40 sm:text-base"
+      >
+        次回サミットに参加する
+        <span class="text-xs font-normal opacity-80">（無料体験枠あり）</span>
+      </a>
+      <a
+        href={links.member}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-gothic inline-flex items-center justify-start gap-3 border border-hero-fg/35 px-8 py-4 text-sm font-semibold text-hero-fg transition hover:border-hero-fg/70 hover:bg-hero-fg/5 sm:text-base"
+      >
+        メンバー登録はこちら
+      </a>
+    </div>
+
+    {/*
+      Stats 3 軸：等幅の card grid を排し、列幅・縦オフセットを意図的にずらす
+      （要件 9.6）。番号 / 英ラベル / 大数値 / 説明 の編集物的レイアウト。
+    */}
+    <div class="col-span-12 mt-24 grid grid-cols-12 gap-x-6 gap-y-10 border-t border-hero-fg/15 pt-12 md:mt-32">
+      <div class="col-span-12 md:col-span-3">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.3em] text-hero-fg/55">
+          01 / Axes
+        </p>
+        <p class="mt-3 font-mincho text-4xl text-hero-fg sm:text-5xl">3軸</p>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-hero-fg/65">
+          ビジネス・趣味・チャリティー
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-4 md:col-start-5 md:mt-8">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.3em] text-hero-fg/55">
+          02 / Years
+        </p>
+        <p class="mt-3 font-mincho text-4xl text-hero-fg sm:text-5xl">7年</p>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-hero-fg/65">
+          東京での運営実績
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-3 md:col-start-10 md:mt-2">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.3em] text-hero-fg/55">
+          03 / Cadence
+        </p>
+        <p class="mt-3 font-mincho text-4xl text-hero-fg sm:text-5xl">月10+</p>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-hero-fg/65">
+          イベント開催数
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

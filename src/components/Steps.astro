@@ -1,0 +1,87 @@
+---
+const steps = [
+  {
+    no: 'STEP 1',
+    title: 'サミットに参加する',
+    body:
+      'まずは月例サミットに参加して、ちよつなの空気を体感してください。初回参加の方には体験枠もご用意しています。',
+  },
+  {
+    no: 'STEP 2',
+    title: 'メンバー登録',
+    body:
+      '雰囲気を気に入っていただけたら、メンバー登録へ。専用アプリをご案内し、すべてのイベント情報にアクセスできます。',
+  },
+  {
+    no: 'STEP 3',
+    title: '3軸でつながる',
+    body:
+      '興味のあるイベントに参加し、ビジネス・趣味・チャリティーで仲間と出会いましょう。活動するほど、会費が下がる特典もあります。',
+  },
+];
+---
+
+<section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + H2（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Steps / 参加までの道順
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        参加までの流れ
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.25] tracking-tight text-ink-900">
+        カンタン3ステップで、<br class="sm:hidden" />つながりが始まります。
+      </h2>
+    </div>
+
+    {/*
+      3 ステップを縦軸の進行で表現。`.editorial-rule-double` を縦に通して
+      進行軸を視覚化（要件 5.3）。中央寄せを排し左揃え進行とし、card 均等並びを排除。
+      番号は `font-serif-en` で 80px 級、本文は `font-gothic` 15px。
+    */}
+    <ol class="col-span-12 mt-20 flex flex-col gap-0 p-0 md:col-start-2 md:col-span-10 md:mt-28">
+      {
+        steps.map((step, idx) => {
+          const num = String(idx + 1).padStart(2, '0');
+          const isLast = idx === steps.length - 1;
+          return (
+            <li class="relative grid grid-cols-12 gap-x-6 list-none">
+              {/* 縦進行軸（左 1〜2 列）：番号と二重罫線 */}
+              <div class="col-span-3 md:col-span-2">
+                <p
+                  class="font-serif-en leading-none text-brand/85"
+                  style="font-size: clamp(48px, 7vw, 96px);"
+                  aria-hidden="true"
+                >
+                  {num}
+                </p>
+                {/* 縦の進行軸：最終ステップ以外は連続させる */}
+                {!isLast && (
+                  <div
+                    class="mt-4 h-full min-h-[120px] w-[3px] border-l border-r border-ink-300/70"
+                    aria-hidden="true"
+                  ></div>
+                )}
+              </div>
+
+              <div class="col-span-9 pb-16 md:col-span-10 md:pb-20">
+                <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+                  {step.no}
+                </p>
+                <hr class="editorial-rule-double mt-3 max-w-[100px]" aria-hidden="true" />
+                <h3 class="font-mincho mt-5 text-2xl leading-[1.4] tracking-tight text-ink-900 sm:text-3xl md:text-[32px]">
+                  {step.title}
+                </h3>
+                <p class="font-gothic mt-5 max-w-xl text-[15px] leading-[1.9] text-ink-700">
+                  {step.body}
+                </p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>

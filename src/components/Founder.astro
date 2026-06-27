@@ -1,0 +1,97 @@
+---
+---
+
+<section class="editorial-section--lg relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + section label（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Founder / 代表からの便り
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        代表メッセージ
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.25] tracking-tight text-ink-900">
+        人は、複数の顔で出会った時に<br class="sm:hidden" />こそ、信頼関係を築ける。
+      </h2>
+    </div>
+
+    {/*
+      左 5 列にモノクロポートレート（`.editorial-photo`）。
+      rounded-3xl の典型 UI を排し、編集物的な角張った写真枠 + アクセント色オーバーレイ
+      （テーマ切替で `var(--accent)` 由来の色に追従）。
+    */}
+    <figure class="col-span-12 mt-16 md:col-span-5 md:mt-24">
+      <div class="editorial-photo">
+        <img
+          src="/images/founder.jpg"
+          alt="代表理事 日野陽平"
+          width="288"
+          height="288"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="mt-5">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.3em] text-brand">
+          Representative
+        </p>
+        <p class="font-mincho mt-2 text-xl tracking-tight text-ink-900">
+          代表理事 日野 陽平
+        </p>
+        <p class="font-gothic mt-2 text-[12.5px] leading-[1.6] text-ink-500">
+          人生コンサルタント／<br />コミュニティープロデューサー
+        </p>
+      </figcaption>
+    </figure>
+
+    {/*
+      右 7 列に引用組版（`font-mincho` の clamp(28px, 4vw, 64px) ベース）。
+      強調セクションのため前後余白を `editorial-section--lg` で広く取る（要件 3.3）。
+      引用符は `font-serif-en` の大型 “ ” を装飾的に。
+    */}
+    <div class="col-span-12 md:col-span-7 md:mt-24 md:pl-10">
+      <span
+        class="font-serif-en pointer-events-none block leading-none text-brand/30"
+        style="font-size: clamp(80px, 10vw, 160px);"
+        aria-hidden="true"
+      >
+        “
+      </span>
+      <hr class="editorial-rule-double mt-4 max-w-[120px]" aria-hidden="true" />
+
+      <div class="font-gothic mt-10 flex flex-col gap-6 text-[16px] leading-[2] text-ink-700">
+        <p>私は、元消防士でした。</p>
+        <p>
+          人の命を救う現場で、私は社会の分断を見てきました。経済的な分断、世代間の分断、そして何より――人と人の心の分断です。
+        </p>
+        <p>
+          消防士を退いた後、人生コンサルタントとして起業し、7年間、東京で様々なコミュニティ運営に携わってきました。ビジネス交流会、趣味のサークル、チャリティー活動。
+        </p>
+        <p>その中で、私は一つの確信に至りました。</p>
+      </div>
+
+      <blockquote
+        class="font-mincho mt-12 border-l-2 border-brand pl-7 leading-[1.55] tracking-tight text-ink-900"
+        style="font-size: clamp(22px, 3.4vw, 40px);"
+      >
+        人は、複数の顔で出会った時にこそ、本当の信頼関係を築ける。
+      </blockquote>
+
+      <div class="font-gothic mt-12 flex flex-col gap-6 text-[16px] leading-[2] text-ink-700">
+        <p>
+          ビジネスの場だけの相手は、所詮ビジネスの相手です。<br />
+          しかし、一緒にゴルフを回り、一緒にチャリティーに汗を流した相手は、生涯の仲間になる。
+        </p>
+        <p>
+          ちよつなは、この確信から生まれました。<br />
+          東京で、本物の仲間と出会える場所を作りたい。<br />
+          日本全国、そして世界中から、千代田というこの場所に集ってほしい。
+        </p>
+        <p class="font-mincho text-lg text-ink-900 sm:text-xl">
+          あなたの参加を、心からお待ちしています。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

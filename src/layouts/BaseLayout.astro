@@ -1,0 +1,145 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '東京・千代田つながりの場（ちよつな）｜ビジネス×趣味×チャリティーの共創コミュニティ',
+  description = '東京の本物の仲間と出会える場所。ビジネス・趣味・チャリティーの3軸で共創する、千代田発の信頼コミュニティ。',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja" data-theme="blue-gold">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'mint' || t === 'blue-gold') {
+            document.documentElement.dataset.theme = t;
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    {/*
+      Editorial × Civic Modernism — 役割別フォントを 1 リクエストに集約。
+      役割：見出し（明朝）/ 本文（ゴシック）/ 欧文 serif / 欧文 sans。
+      游明朝・游ゴシックは OS 同梱（CSS スタック先頭）でローカル優先。
+      本 link は CDN フォールバックとして Shippori / Zen Kaku / Fraunces / Tenor を供給する。
+    */}
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;900&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Fraunces:wght@400;500;700&family=Tenor+Sans&display=swap"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    {/*
+      ページを縦に貫く編集罫線。BaseLayout 内に 1 本だけ存在する（重複禁止）。
+      transform: scaleY(--editorial-rule-progress) でスクロール進行に追従し、
+      prefers-reduced-motion: reduce ではフル長で固定（global.css の @media 参照）。
+    */}
+    <div class="editorial-rule-vertical" aria-hidden="true"></div>
+
+    {/*
+      紙ノイズテクスチャ。SVG <feTurbulence> を data URI で inline 化（global.css）。
+      opacity 0.1 + mix-blend-mode: multiply で本文可読性を損なわない装飾レイヤ。
+    */}
+    <div class="editorial-paper-noise" aria-hidden="true"></div>
+
+    <slot />
+
+    <script is:inline>
+      (function () {
+        var prm =
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)');
+        var rule = document.querySelector('.editorial-rule-vertical');
+        var staggerRoots = document.querySelectorAll('[data-stagger]');
+
+        // 各 [data-stagger] の直下子要素に --stagger-index を順次付与（CSS で transition-delay に展開）。
+        staggerRoots.forEach(function (root) {
+          var kids = root.children;
+          for (var i = 0; i < kids.length; i++) {
+            kids[i].style.setProperty('--stagger-index', String(i));
+          }
+        });
+
+        // reduced-motion: 縦罫線フル長固定 + stagger 即時可視化（リスナー登録なし）。
+        if (prm && prm.matches) {
+          if (rule) rule.style.setProperty('--editorial-rule-progress', '1');
+          staggerRoots.forEach(function (root) {
+            root.classList.add('is-revealed');
+          });
+          return;
+        }
+
+        // 縦罫線の伸長：scroll を rAF で 1 フレーム 1 回に間引き、
+        // 0..1 の正規化値を CSS 変数に書き戻す。
+        if (rule) {
+          var rafId = 0;
+          var update = function () {
+            rafId = 0;
+            var doc = document.documentElement;
+            var max = doc.scrollHeight - doc.clientHeight;
+            var ratio = max > 0 ? doc.scrollTop / max : 1;
+            if (ratio < 0) ratio = 0;
+            if (ratio > 1) ratio = 1;
+            rule.style.setProperty(
+              '--editorial-rule-progress',
+              String(ratio)
+            );
+          };
+          var schedule = function () {
+            if (!rafId) rafId = window.requestAnimationFrame(update);
+          };
+          window.addEventListener('scroll', schedule, { passive: true });
+          window.addEventListener('resize', schedule, { passive: true });
+          update();
+        }
+
+        // staggered reveal：1 つの IntersectionObserver で全 [data-stagger] を観測。
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+          );
+          staggerRoots.forEach(function (root) {
+            io.observe(root);
+          });
+        } else {
+          staggerRoots.forEach(function (root) {
+            root.classList.add('is-revealed');
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
