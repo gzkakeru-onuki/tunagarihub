@@ -1,0 +1,106 @@
+---
+const year = new Date().getFullYear();
+
+const links = [
+  { href: '#about', label: 'ちよつなとは' },
+  { href: '#stories', label: '事例' },
+  { href: '#trust', label: '安心の仕組み' },
+  { href: '#activities', label: '活動内容' },
+  { href: '#summit', label: 'サミット' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+<footer class="relative overflow-hidden bg-surface-dark py-16 text-white transition-colors duration-500 sm:py-20">
+  {/* 上端の毛筆風罫線：ベタ塗り境界を排し、編集物的な分節を作る（要件 2.7 / 5.3）。 */}
+  <hr
+    class="editorial-rule-brush absolute inset-x-0 top-0"
+    aria-hidden="true"
+    style="--editorial-rule-color: 255 255 255;"
+  />
+
+  <div class="editorial-grid relative">
+    {/* 左ブロック（5 cols）：ロゴ + ステートメント */}
+    <div class="col-span-12 md:col-span-5">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/55">
+        Chiyotsuna · Tokyo Chiyoda
+      </p>
+      <p class="font-mincho mt-4 text-3xl tracking-tight text-white sm:text-4xl">
+        ちよつな
+      </p>
+      <p class="font-gothic mt-3 text-[13px] tracking-[0.08em] text-white/65">
+        東京・千代田つながりの場
+      </p>
+      <hr
+        class="editorial-rule-double mt-7 max-w-[100px] border-white/35"
+        aria-hidden="true"
+        style="border-color: rgb(255 255 255 / 0.35);"
+      />
+      <p class="font-gothic mt-7 max-w-sm text-[14px] leading-[1.95] text-white/75">
+        ビジネス × 趣味 × チャリティーの3軸で、<br />
+        人と人のつながりから未来を共創する<br />
+        千代田発のコミュニティ。
+      </p>
+    </div>
+
+    {/* 中央ブロック（3 cols）：Sitemap */}
+    <div class="col-span-6 mt-12 md:col-span-3 md:col-start-7 md:mt-0">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/45">
+        Sitemap
+      </p>
+      <ul class="font-gothic mt-5 flex flex-col gap-3 p-0 text-[14px] text-white/80">
+        {
+          links.map((link) => (
+            <li class="list-none">
+              <a
+                href={link.href}
+                class="border-b border-transparent pb-0.5 transition hover:border-white hover:text-white"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* 右ブロック（3 cols）：Contact */}
+    <div class="col-span-6 mt-12 md:col-span-3 md:col-start-10 md:mt-0">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/45">
+        Contact
+      </p>
+      <ul class="font-gothic mt-5 flex flex-col gap-3 p-0 text-[14px] text-white/80">
+        <li class="list-none">東京都千代田区</li>
+        <li class="list-none">info@chiyotuna.example</li>
+        <li class="flex gap-4 pt-2 list-none">
+          <a href="#" class="border-b border-transparent pb-0.5 transition hover:border-white hover:text-white">LINE</a>
+          <a
+            href="https://www.instagram.com/chiyo_tuna/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b border-transparent pb-0.5 transition hover:border-white hover:text-white"
+          >Instagram</a>
+          <a
+            href="https://x.com/chiyo_tuna"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b border-transparent pb-0.5 transition hover:border-white hover:text-white"
+          >X</a>
+        </li>
+      </ul>
+    </div>
+
+    {/*
+      千代田サインオフ（要件 7.2）：4 エリアを `font-serif-en` 12.5px で右下に控えめに。
+      Footer は本要件の必須拠点。
+    */}
+    <div class="col-span-12 mt-16 flex flex-col gap-6 border-t border-white/15 pt-8 md:flex-row md:items-baseline md:justify-between md:mt-20">
+      <p class="font-serif-en text-[12.5px] uppercase tracking-[0.3em] text-white/65">
+        Kanda · Otemachi · Akihabara · Imperial Palace, Tokyo
+      </p>
+      <p class="font-gothic text-[12px] text-white/45">
+        © {year} 東京・千代田つながりの場（ちよつな）. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

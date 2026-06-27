@@ -1,0 +1,92 @@
+---
+import { links } from '../lib/links';
+---
+
+<section
+  id="cta"
+  class="editorial-section--lg relative overflow-hidden bg-page transition-colors duration-500"
+>
+  <div class="editorial-grid relative">
+    {/* eyebrow（左揃え、中央寄せ排除） */}
+    <div class="col-span-12 md:col-span-8">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Call to Action / 始まりの場
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        ここから、始まる
+      </p>
+    </div>
+
+    {/* 左 6 列：H2 + リード + CTA。中央寄せ・centered CTA を完全に排除（要件 9.1 / 9.2）。 */}
+    <div class="col-span-12 mt-10 md:col-span-6">
+      <h2 class="font-mincho leading-[1.2] tracking-tight text-ink-900">
+        ここから始まる、<br class="sm:hidden" />新しい出会いを。
+      </h2>
+      <hr class="editorial-rule-double mt-8 max-w-[120px]" aria-hidden="true" />
+      <p class="font-gothic mt-8 max-w-xl text-[15px] leading-[1.95] text-ink-700">
+        東京で、本物の仲間と出会える場所。<br />
+        ビジネス・趣味・チャリティーの3軸で、立体的な信頼を育む共創コミュニティ。
+      </p>
+      <p class="font-mincho mt-8 max-w-xl text-lg leading-[1.7] text-ink-900 sm:text-xl">
+        迷っているなら、まずはサミットへ。<br />
+        百聞は一見にしかず、です。
+      </p>
+
+      <div class="cta-anchor-left mt-12 flex flex-col gap-4 sm:flex-row sm:items-stretch">
+        <a
+          href={links.summit}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-gothic inline-flex items-center justify-start gap-3 bg-brand px-8 py-4 text-sm font-semibold text-white shadow-md shadow-brand/30 transition hover:bg-brand-dark hover:shadow-lg hover:shadow-brand/40 sm:text-base"
+        >
+          次回サミットに参加する
+        </a>
+        <a
+          href={links.member}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-gothic inline-flex items-center justify-start gap-3 border border-ink-800 px-8 py-4 text-sm font-semibold text-ink-900 transition hover:bg-ink-800 hover:text-white sm:text-base"
+        >
+          メンバー登録はこちら
+        </a>
+      </div>
+
+      {/* SNS 列：公式 LINE は社外スコープで URL 未確定（要件 2.8 を満たすため
+          `href="#"` の申込導線を残さず、確定までエントリ自体を割愛する） */}
+      <div class="font-gothic mt-12 flex flex-wrap gap-x-6 gap-y-2 text-xs text-ink-500 sm:text-sm">
+        <a
+          href="https://www.instagram.com/chiyo_tuna/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-b border-ink-300 pb-1 transition hover:border-ink-800 hover:text-ink-900"
+        >▶ Instagram</a>
+        <a
+          href="https://x.com/chiyo_tuna"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-b border-ink-300 pb-1 transition hover:border-ink-800 hover:text-ink-900"
+        >▶ X (Twitter)</a>
+      </div>
+    </div>
+
+    {/*
+      右 6 列：3 軸（ビジネス × 趣味 × チャリティー）の重なる円シルエット。
+      テーマアクセント色（`var(--accent)`）の透過のみで描画し、テーマ切替で追従する。
+      要件 7.1 のクロージング側起点として機能。
+    */}
+    <div class="col-span-12 mt-12 md:col-span-6 md:mt-0 md:flex md:items-center md:justify-center">
+      <svg
+        viewBox="0 0 360 360"
+        class="block w-full max-w-md"
+        aria-hidden="true"
+      >
+        <circle cx="135" cy="125" r="100" fill="none" stroke="rgb(var(--accent) / 0.55)" stroke-width="1.2" />
+        <circle cx="225" cy="125" r="100" fill="none" stroke="rgb(var(--accent) / 0.55)" stroke-width="1.2" />
+        <circle cx="180" cy="220" r="100" fill="none" stroke="rgb(var(--accent) / 0.55)" stroke-width="1.2" />
+        <text x="135" y="130" text-anchor="middle" font-family="Fraunces, serif" font-size="11" letter-spacing="3" fill="rgb(var(--accent) / 0.85)">BUSINESS</text>
+        <text x="225" y="130" text-anchor="middle" font-family="Fraunces, serif" font-size="11" letter-spacing="3" fill="rgb(var(--accent) / 0.85)">HOBBY</text>
+        <text x="180" y="225" text-anchor="middle" font-family="Fraunces, serif" font-size="11" letter-spacing="3" fill="rgb(var(--accent) / 0.85)">CHARITY</text>
+      </svg>
+    </div>
+  </div>
+</section>

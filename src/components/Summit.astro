@@ -1,0 +1,122 @@
+---
+const schedule = [
+  { day: '第2土曜日', time: '15:00 – 21:00' },
+  { day: '第4水曜日', time: '18:30 – 21:30' },
+];
+
+const program = [
+  'ちよつなの紹介・コミュニティ構想の共有',
+  '共創プロジェクト・メンバー紹介',
+  '共創メンバー募集・協賛パートナー募集',
+  '総合交流会',
+];
+---
+
+<section
+  id="summit"
+  class="editorial-section--lg relative overflow-hidden bg-surface-dark text-white transition-colors duration-500"
+>
+  <div class="editorial-grid relative">
+    {/* eyebrow（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/65">
+        Summit / 旗艦イベント
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand-light">
+        定例イベント
+      </p>
+    </div>
+
+    {/*
+      H2 を画面左端まで貫通させ、グリッド破り 1 件を成立（要件 2.2 / 9.3）。
+      `font-mincho` の clamp ベースで大判編集タイトルとして据える。
+    */}
+    <h2
+      class="font-mincho col-span-12 mt-8 leading-[1.15] tracking-tight text-white"
+      style="grid-column: 1 / -1; margin-left: calc(-1 * clamp(20px, 4vw, 64px)); padding-left: clamp(20px, 4vw, 64px); padding-right: clamp(20px, 4vw, 64px);"
+    >
+      東京・千代田つながりサミット
+    </h2>
+
+    <hr
+      class="editorial-rule-double col-span-12 mt-10 max-w-[160px] border-white/40"
+      aria-hidden="true"
+      style="border-color: rgb(255 255 255 / 0.4);"
+    />
+
+    <p class="font-gothic col-span-12 mt-8 max-w-2xl text-[15px] leading-[1.95] text-white/80 md:col-span-7">
+      毎月開催している、ちよつなの旗艦イベントです。<br />
+      初めての方は、まずここからご参加ください。
+    </p>
+
+    {/* 詳細：左 7 列にスケジュール、右 5 列にプログラム。rounded-3xl の典型カードを排除。 */}
+    <div class="col-span-12 mt-20 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-24">
+      <div class="col-span-12 md:col-span-7 md:pr-8">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/55">
+          01 / Schedule
+        </p>
+        <h3 class="font-mincho mt-3 text-2xl tracking-tight text-white sm:text-3xl">
+          開催スケジュール
+        </h3>
+        <hr class="editorial-rule-double mt-5 max-w-[100px] border-white/30" aria-hidden="true" style="border-color: rgb(255 255 255 / 0.3);" />
+        <ul class="font-gothic mt-8 flex flex-col gap-5 p-0">
+          {
+            schedule.map((s) => (
+              <li class="flex items-baseline justify-between border-b border-white/15 pb-4 list-none">
+                <span class="font-mincho text-lg text-white sm:text-xl">
+                  📅 {s.day}
+                </span>
+                <span class="text-[15px] text-white/85">{s.time}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="font-gothic mt-8 flex flex-col gap-2 text-[14px] text-white/80">
+          <p>📍 千代田区内の駅近会場（参加人数により変動）</p>
+          <p>🌐 日本語・英語対応</p>
+        </div>
+      </div>
+
+      <div class="col-span-12 md:col-span-5 md:mt-12">
+        <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/55">
+          02 / Program
+        </p>
+        <h3 class="font-mincho mt-3 text-2xl tracking-tight text-white sm:text-3xl">
+          当日の内容
+        </h3>
+        <hr class="editorial-rule-double mt-5 max-w-[100px] border-white/30" aria-hidden="true" style="border-color: rgb(255 255 255 / 0.3);" />
+        <ul class="font-gothic mt-8 flex flex-col gap-5 p-0">
+          {
+            program.map((item, i) => {
+              const num = String(i + 1).padStart(2, '0');
+              return (
+                <li class="flex items-start gap-5 list-none">
+                  <span
+                    class="font-serif-en mt-1 shrink-0 text-[12px] uppercase tracking-[0.2em] text-white/55"
+                    aria-hidden="true"
+                  >
+                    {num}
+                  </span>
+                  <span class="text-[15px] leading-[1.85] text-white/90">{item}</span>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </div>
+
+    {/*
+      CTA：左寄せ強制（`.cta-anchor-left`）で中央配置を機械的に禁止（要件 2.5 / 9.2）。
+      btn-primary の rounded-full を排し、編集デザイン的角形へ。
+    */}
+    <div class="cta-anchor-left col-span-12 mt-16 md:col-start-1 md:col-span-8 md:mt-20">
+      <a
+        href="#cta"
+        class="font-gothic inline-flex items-center gap-3 bg-brand px-8 py-4 text-sm font-semibold text-white shadow-md shadow-brand/30 transition hover:bg-brand-dark sm:text-base"
+      >
+        次回サミットに参加する
+      </a>
+    </div>
+  </div>
+</section>

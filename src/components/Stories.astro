@@ -1,0 +1,126 @@
+---
+interface Story {
+  readonly no: string;
+  readonly title: string;
+  readonly tags: ReadonlyArray<string>;
+  readonly body: ReadonlyArray<string>;
+  readonly quote: string | null;
+  readonly closing: string | null;
+}
+
+const stories: ReadonlyArray<Story> = [
+  {
+    no: 'STORY 01',
+    title: 'ゴルフ仲間との一言が、NPOへの寄付になった',
+    tags: ['ゴルフ', 'チャリティー', 'ビジネス'],
+    body: [
+      'ある経営者Aさんは、ゴルフが好きでちよつなのゴルフ会に参加していました。',
+      '何度かラウンドを共にする中で、メンバーのBさんが熱心にチャリティー活動を続けていることを知ります。プレー後の食事の席で、ぽつりぽつりと語られる活動への想い。',
+      '後日、別のビジネスマッチング会で再会したとき、Aさんから自然にこう声がかかりました。',
+    ],
+    quote: '「あのNPO、応援させてもらえないか」',
+    closing:
+      'ビジネスマッチング目的で来ていたら、絶対に生まれなかった寄付です。これがちよつなが目指す、3軸の共創です。',
+  },
+  {
+    no: 'STORY 02',
+    title: '趣味のイベントから、ちよつなのアプリが生まれた',
+    tags: ['趣味', '共創', 'プロダクト'],
+    body: [
+      '趣味のイベントに参加していた一人のエンジニアが、ちよつなの空気に共感してくれました。',
+      'ビジネスマッチングの場で「エンジニアを探しています」と言って出会っていたら、関係は受発注で終わっていたかもしれません。',
+      'しかし、趣味の場でちよつなのコミュニティを体感していたエンジニアは、こう言ってくれました。',
+    ],
+    quote: '「この場をもっと良くするアプリ、一緒に作りませんか」',
+    closing:
+      'ちよつなのアプリは、ちよつな自身が掲げる「3軸の共創」から生まれました。コミュニティが、自らを進化させる仕組みを内側から持っているのです。',
+  },
+];
+---
+
+<section id="stories" class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + H2（左揃え、中央寄せ排除） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Stories / 連載
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        ちよつなで実際に起きていること
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.2] tracking-tight text-ink-900">
+        抽象論ではなく、<br class="sm:hidden" />すでに起きている事実です。
+      </h2>
+    </div>
+
+    {
+      stories.map((story, idx) => {
+        const photoOrder = idx % 2 === 0 ? 'md:order-1' : 'md:order-2';
+        const textOrder = idx % 2 === 0 ? 'md:order-2' : 'md:order-1';
+        return (
+          <article class="col-span-12 mt-24 md:mt-36">
+            <div class="grid grid-cols-12 gap-x-6 gap-y-10">
+              {/*
+                写真スロット：実画像未配置のため `.editorial-photo-placeholder` を採用。
+                AI 生成画像 / ストック写真での穴埋めは禁止（要件 7.3 / 7.5）。
+              */}
+              <figure class={`col-span-12 ${photoOrder} md:col-span-5`}>
+                <div class="editorial-photo-placeholder" aria-hidden="true"></div>
+                <figcaption class="font-serif-en mt-4 text-[12px] uppercase tracking-[0.2em] text-ink-500">
+                  {story.no} — Photo TBD
+                </figcaption>
+              </figure>
+
+              {/*
+                本文：story 01 のみ data-stagger で本文行単位 reveal を成立（要件 6.2）。
+                Hero と合わせて全体 2 箇所で打ち止め。
+              */}
+              <div class={`col-span-12 ${textOrder} md:col-span-7`}>
+                <p class="font-serif-en text-[12px] uppercase tracking-[0.32em] text-brand">
+                  {story.no}
+                </p>
+                <hr class="editorial-rule-double mt-3 max-w-[120px]" aria-hidden="true" />
+                <ul class="mt-6 flex flex-wrap gap-2 p-0">
+                  {
+                    story.tags.map((tag) => (
+                      <li class="font-gothic list-none border border-ink-300/70 px-3 py-1 text-[11px] tracking-[0.08em] text-ink-600">
+                        #{tag}
+                      </li>
+                    ))
+                  }
+                </ul>
+                <h3 class="font-mincho mt-7 text-2xl leading-[1.45] tracking-tight text-ink-900 sm:text-3xl md:text-[34px]">
+                  {story.title}
+                </h3>
+                <div
+                  class="font-gothic mt-7 flex flex-col gap-5 text-[15px] leading-[1.95] text-ink-700"
+                  data-stagger={idx === 0 || undefined}
+                >
+                  {
+                    story.body.map((paragraph) => (
+                      <p>{paragraph}</p>
+                    ))
+                  }
+                </div>
+                {
+                  story.quote && (
+                    <blockquote class="font-mincho mt-9 border-l-2 border-brand pl-6 text-xl leading-[1.7] text-ink-900 sm:text-2xl">
+                      {story.quote}
+                    </blockquote>
+                  )
+                }
+                {
+                  story.closing && (
+                    <p class="font-gothic mt-8 max-w-prose text-[14px] leading-[1.9] text-ink-600">
+                      ―― {story.closing}
+                    </p>
+                  )
+                }
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>

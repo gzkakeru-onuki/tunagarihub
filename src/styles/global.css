@@ -1,0 +1,428 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Theme tokens (RGB triplets so Tailwind opacity modifiers work)
+   ============================================================ */
+@layer base {
+  :root,
+  [data-theme="blue-gold"] {
+    /* Core Brand Blues */
+    --primary: 31 79 163;          /* #1F4FA3 Primary Brand Blue */
+    --primary-deep: 23 59 122;     /* #173B7A Deep Corporate Blue */
+    --primary-soft: 94 127 185;    /* #5E7FB9 Soft Accent Blue */
+    --primary-pale: 220 230 245;   /* #DCE6F5 Pale Blue Background */
+
+    /* Signature Gold / Warm Accent */
+    --accent: 217 161 42;          /* #D9A12A Main Gold Accent */
+    --accent-deep: 200 138 20;     /* #C88A14 Luxury Gold */
+    --accent-soft: 231 201 120;    /* #E7C978 Soft Champagne */
+    --accent-pale: 242 232 210;    /* #F2E8D2 Light Warm Sand */
+
+    /* Surfaces */
+    --page: 248 248 246;           /* #F8F8F6 Soft Off White */
+    --tint: 220 230 245;           /* #DCE6F5 Pale Blue */
+    --surface-dark: 23 59 122;     /* #173B7A — footer/summit dark */
+
+    /* Hero (dark variant) */
+    --hero-from: 31 79 163;        /* #1F4FA3 */
+    --hero-to: 23 59 122;          /* #173B7A */
+    --hero-fg: 255 255 255;        /* white text on dark */
+    --hero-cta: 217 161 42;        /* gold CTA */
+    --hero-cta-hover: 200 138 20;  /* luxury gold */
+    --hero-cta-text: 255 255 255;
+    --hero-accent: 217 161 42;     /* gold accent for highlighted text */
+    --hero-orb-1: 217 161 42;
+    --hero-orb-2: 94 127 185;
+
+    /* Editorial primitives — 罫線・紙ノイズ・写真オーバーレイをテーマで追従。
+       既存トークンには触らず、装飾用の派生変数のみここに足す。 */
+    --editorial-rule-color: 28 25 23;     /* ink-800 相当の罫線基調色 */
+    --editorial-noise-tint: 23 59 122;    /* primary-deep 系の紙ノイズ tint */
+    --accent-overlay-alpha: 0.18;         /* 写真モノクロ + アクセント色合成濃度 */
+  }
+
+  [data-theme="mint"] {
+    /* Core Mint Colors */
+    --primary: 46 196 182;         /* #2EC4B6 Primary Mint */
+    --primary-deep: 11 110 79;     /* #0B6E4F Deep Mint Anchor */
+    --primary-soft: 148 210 189;   /* #94D2BD Soft Mint */
+    --primary-pale: 230 244 241;   /* #E6F4F1 Pale Mint Background */
+
+    /* Accent (Calm Teal & Muted Green & Light Highlight) */
+    --accent: 44 122 123;          /* #2C7A7B Calm Teal Accent */
+    --accent-deep: 58 125 68;      /* #3A7D44 Muted Green Accent */
+    --accent-soft: 207 244 236;    /* #CFF4EC Light Highlight */
+    --accent-pale: 207 244 236;    /* #CFF4EC */
+
+    /* Surfaces */
+    --page: 247 250 249;           /* #F7FAF9 Soft Off White */
+    --tint: 230 244 241;           /* #E6F4F1 */
+    --surface-dark: 26 46 53;      /* #1A2E35 Text Dark — footer */
+
+    /* Hero (light variant per spec) */
+    --hero-from: 230 244 241;      /* #E6F4F1 pale mint */
+    --hero-to: 255 255 255;        /* #FFFFFF */
+    --hero-fg: 26 46 53;           /* #1A2E35 dark text */
+    --hero-cta: 46 196 182;        /* #2EC4B6 mint CTA */
+    --hero-cta-hover: 11 110 79;   /* #0B6E4F deep mint */
+    --hero-cta-text: 255 255 255;
+    --hero-accent: 11 110 79;      /* deep mint accent for headline highlight */
+    --hero-orb-1: 46 196 182;
+    --hero-orb-2: 148 210 189;
+
+    /* Editorial primitives — mint テーマでは罫線をやや明色寄りに、
+       ノイズ tint は primary-deep 系で控えめに、オーバーレイ濃度はやや弱め。 */
+    --editorial-rule-color: 26 46 53;     /* surface-dark 相当の罫線基調色 */
+    --editorial-noise-tint: 11 110 79;    /* primary-deep mint 系の紙ノイズ tint */
+    --accent-overlay-alpha: 0.16;         /* 写真モノクロ + アクセント色合成濃度（mint は控えめ） */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* sticky ヘッダー高（h-16 = 4rem = 64px）と同期。Header.astro の
+       scroll-spy `rootMargin` 上端も 64px で揃えること。 */
+    scroll-padding-top: 4rem;
+  }
+
+  body {
+    @apply bg-page text-ink-800 font-gothic antialiased;
+    font-size: 15px;
+    line-height: 1.8;
+    font-feature-settings: "palt";
+    transition: background-color 0.4s ease;
+  }
+
+  /* Editorial typography scale — 見出しと本文のサイズ差は H1 で 3 倍以上を確保。
+     モバイル幅でも H1・H2 の最終描画は 40px 以上に解決される。 */
+  h1, h2, h3, h4 {
+    @apply font-mincho tracking-tight;
+  }
+  h1 {
+    font-size: clamp(48px, 8vw, 128px);
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: clamp(40px, 5.5vw, 80px);
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: clamp(24px, 3vw, 40px);
+    line-height: 1.3;
+  }
+  h4 {
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.4;
+  }
+
+  /* prefers-reduced-motion: reduce — 装飾的なモーションを単一ブロックで集約停止する。
+     コンポーネント側に reduced-motion 分岐を分散させない。
+     editorial-civic-redesign 仕様の Task 2.4 で staggered reveal / 縦罫線伸長の縮退も
+     ここに統合する。 */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    body {
+      transition: none;
+    }
+    /* Hero blur orb の装飾アニメーション・トランジションを停止 */
+    [aria-hidden="true"] .blur-3xl,
+    .blur-3xl {
+      animation: none !important;
+      transition: none !important;
+    }
+    /* 縦罫線伸長は最大長で固定し、視覚要素として残す */
+    .editorial-rule-vertical {
+      transform: scaleY(1) !important;
+    }
+    /* staggered reveal は即時可視化（時差なし） */
+    [data-stagger] > * {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    /* 紙ノイズの装飾アニメーション（あれば）を停止 */
+    .editorial-paper-noise {
+      animation: none !important;
+    }
+    /* その他の transition を持つ要素は実質ゼロに短縮（瞬時切替） */
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition hover:bg-brand-dark hover:shadow-xl hover:shadow-brand/30 sm:px-8 sm:py-4 sm:text-base;
+  }
+
+  .btn-hero {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-hero-cta px-6 py-3 text-sm font-semibold text-hero-cta-text shadow-lg shadow-hero-cta/20 transition hover:bg-hero-cta-hover hover:shadow-xl hover:shadow-hero-cta/30 sm:px-8 sm:py-4 sm:text-base;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-300 bg-white px-6 py-3 text-sm font-semibold text-ink-800 transition hover:border-ink-800 hover:bg-ink-50 sm:px-8 sm:py-4 sm:text-base;
+  }
+
+  .container-narrow {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-8;
+  }
+
+  .container-prose {
+    @apply mx-auto w-full max-w-3xl px-5 sm:px-8;
+  }
+
+  .section-label {
+    @apply mb-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold leading-tight text-ink-900 sm:text-4xl md:text-5xl;
+  }
+
+  /* scroll-spy: 現在セクションのナビ強調（Header.astro が data-nav-target で
+     `is-active` を付与する。要件 7.1〜7.4） */
+  .nav-link.is-active {
+    @apply font-bold text-brand;
+  }
+
+  /* Theme toggle */
+  .theme-btn {
+    @apply rounded-full px-3 py-1.5 text-[11px] font-semibold tracking-wide text-ink-500 transition;
+  }
+  .theme-btn:hover {
+    @apply text-ink-800;
+  }
+  .theme-btn[data-theme="blue-gold"].is-active {
+    background-color: #1F4FA3;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px -2px rgba(31, 79, 163, 0.45);
+  }
+  .theme-btn[data-theme="mint"].is-active {
+    background-color: #2EC4B6;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px -2px rgba(46, 196, 182, 0.45);
+  }
+
+  /* ============================================================
+     Editorial × Civic Modernism — primitives
+     Task 2.1: グリッド + セクション余白
+     ============================================================ */
+
+  /* 12 カラム × gutter 24px のベースグリッド。max-width 1440px、左右パディングは
+     375px〜1440px で 20〜64px に追従する。各セクションはこのグリッドを土台に
+     差分でグリッド破りを構成する。 */
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 4vw, 64px);
+  }
+
+  /* グリッド破り修飾子：CSS 変数 `--break` で意図的なはみ出し量を明示する。
+     例：`<div class="editorial-grid--break" style="--break: 80px;">`
+     → 左右に 80px はみ出す。負方向はカスタム要素側の `margin-inline` で。 */
+  .editorial-grid--break {
+    margin-inline: calc(var(--break, 0px) * -1);
+    padding-inline: calc(var(--break, 0px) + clamp(20px, 4vw, 64px));
+  }
+
+  /* セクション余白 — 平常 80〜200px / 強調 120〜240px。
+     PC で 120〜200px、モバイルでも下限 80px / 120px を確保し、
+     PC 比率に対して 60% 以上の広さを保つ。 */
+  .editorial-section {
+    padding-block: clamp(80px, 12vw, 200px);
+  }
+  .editorial-section--lg {
+    padding-block: clamp(120px, 16vw, 240px);
+  }
+
+  /* セクション境界：ベタ塗りでは区切らず、罫線・テクスチャで分節。
+     既定は二重罫を上下に薄く敷く。背景色トークンとは独立して使える。 */
+  .editorial-section-divider {
+    border-top: 1px solid rgb(var(--editorial-rule-color) / 0.18);
+    border-bottom: 1px solid rgb(var(--editorial-rule-color) / 0.18);
+  }
+
+  /* ============================================================
+     Task 2.2: 縦罫線（ページ貫通）+ 紙ノイズ
+     ============================================================ */
+
+  /* ページ全体を貫く縦罫線。BaseLayout に 1 本だけ配置する想定。
+     transform-origin: top + scaleY(--editorial-rule-progress) でスクロール進行に
+     応じて下方向に伸長する。reduced-motion 時は @media ブロックで scaleY(1) 固定。
+     left は clamp() で 16〜48px の間に追従し、モバイル幅でも確実に視認できる。 */
+  .editorial-rule-vertical {
+    position: fixed;
+    top: 0;
+    left: clamp(16px, 4vw, 48px);
+    width: 1px;
+    height: 100vh;
+    background: rgb(var(--editorial-rule-color) / 0.45);
+    transform-origin: top;
+    transform: scaleY(var(--editorial-rule-progress, 0));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* 紙ノイズ — SVG <feTurbulence> を data URI で inline 化。
+     ファイル外部依存ゼロ・テーマ非依存・1KB 未満。
+     opacity 0.1 + mix-blend-mode: multiply で本文の可読性を損なわない。
+     z-index 0 でコンテンツ（z-index 自動 / 1 以上）の下に置く。 */
+  .editorial-paper-noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.1;
+    mix-blend-mode: multiply;
+    z-index: 0;
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+  }
+
+  /* ============================================================
+     Task 2.3: 罫線・縦書き・写真処理プリミティブ
+     ============================================================ */
+
+  /* 二重罫線。border-top + border-bottom + 高さ 4px で 1+間隔+1 を表現。 */
+  .editorial-rule-double {
+    height: 4px;
+    border-top: 1px solid rgb(var(--editorial-rule-color) / 0.7);
+    border-bottom: 1px solid rgb(var(--editorial-rule-color) / 0.7);
+    background: transparent;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 毛筆風かすれ罫線。CSS のみで濃淡を持たせる。 */
+  .editorial-rule-brush {
+    height: 2px;
+    border: 0;
+    background-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgb(var(--editorial-rule-color) / 0.1) 6%,
+      rgb(var(--editorial-rule-color) / 0.7) 22%,
+      rgb(var(--editorial-rule-color) / 0.35) 50%,
+      rgb(var(--editorial-rule-color) / 0.85) 72%,
+      rgb(var(--editorial-rule-color) / 0.2) 92%,
+      transparent 100%
+    );
+    background-repeat: no-repeat;
+  }
+
+  /* 縦書き要素：ページ全体で 1〜2 箇所のみに使う想定（要件 5.1）。
+     見出し用に font-mincho を継承し、字間を広めに。 */
+  .editorial-vertical-text {
+    @apply font-mincho;
+    writing-mode: vertical-rl;
+    letter-spacing: 0.18em;
+    line-height: 1.6;
+  }
+
+  /* 写真処理：モノクロ + アクセント色 1 色オーバーレイ（要件 7.4）。
+     <figure class="editorial-photo">…<img />…<figcaption /></figure> 構造。
+     アクセント色は --accent（テーマトークン）から派生し、テーマ切替で追従。 */
+  .editorial-photo {
+    position: relative;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .editorial-photo > img,
+  .editorial-photo > picture > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%) contrast(1.05);
+  }
+  .editorial-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--accent) / var(--accent-overlay-alpha, 0.18));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .editorial-photo > figcaption {
+    @apply font-serif-en text-ink-600;
+    margin-top: 12px;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  /* 実画像未配置時のフォールバック（要件 7.5）。
+     AI 生成画像で穴埋めしない代わりに、罫線枠＋差し替えキャプションで明示する。 */
+  .editorial-photo-placeholder {
+    position: relative;
+    display: grid;
+    place-items: end start;
+    aspect-ratio: 4 / 5;
+    padding: 16px;
+    border: 1px solid rgb(var(--editorial-rule-color) / 0.55);
+    background: rgb(var(--page) / 0.6);
+    color: rgb(var(--editorial-rule-color) / 0.85);
+  }
+  .editorial-photo-placeholder::before {
+    content: "TBD: 実写素材差し替え";
+    @apply font-serif-en;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* アイコン基盤：モノラインの活字記号調（要件 5.5）。
+     角丸ボタン+白アイコンの典型 UI を排し、罫線 1px と現在色で表現する。 */
+  .editorial-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6em;
+    height: 1.6em;
+    border: 1px solid currentColor;
+    color: rgb(var(--editorial-rule-color) / 0.85);
+    font-feature-settings: "tnum";
+  }
+
+  /* CTA 中央配置の機械的禁止（要件 2.5 / 9.2）。
+     grid / flex 親の中で必ず左寄せ・上寄せに固定する。 */
+  .cta-anchor-left {
+    align-self: start;
+    justify-self: start;
+    margin-inline: 0;
+  }
+
+  /* ============================================================
+     Task 2.4: staggered reveal プリミティブ
+     ============================================================ */
+
+  /* [data-stagger] のルートに付与すると、直下子要素が段階的に reveal される。
+     BaseLayout の is:inline スクリプトが --stagger-index を子に順次設定し、
+     ルートに `is-revealed` を付ける。
+     reduced-motion 時の縮退は @layer base 内の @media ブロックで対応する。 */
+  [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: calc(var(--stagger-index, 0) * 80ms);
+    will-change: opacity, transform;
+  }
+  [data-stagger].is-revealed > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

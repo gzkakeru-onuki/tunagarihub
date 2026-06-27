@@ -1,0 +1,173 @@
+---
+const reasons = [
+  {
+    title: 'ビジネスだけの場には、',
+    accent: '商談目的の人しか集まらない。',
+  },
+  {
+    title: '趣味だけの場では、',
+    accent: '人生の広がりが生まれない。',
+  },
+  {
+    title: 'チャリティーだけでは、',
+    accent: '続けるのが難しい。',
+  },
+];
+
+interface Axis {
+  readonly label: string;
+  readonly title: string;
+  readonly description: string;
+  readonly color: string;
+}
+
+const axes: ReadonlyArray<Axis> = [
+  {
+    label: 'Business',
+    title: 'ビジネス',
+    description: '商談ではなく、真剣に仕事を動かす顔から始まる本物の信頼を仕事へ持ち帰る場です。',
+    color: 'from-brand to-brand-dark',
+  },
+  {
+    label: 'Hobby',
+    title: '趣味',
+    description: 'ゴルフや旅、食といった素顔の時間を共にし、肩書きを超えた関係を育てます。',
+    color: 'from-gold to-brand-accent',
+  },
+  {
+    label: 'Charity',
+    title: 'チャリティー',
+    description: '社会への還元を共に企てることで、人生に通底する価値観を確かめ合います。',
+    color: 'from-ink-700 to-ink-900',
+  },
+];
+---
+
+<section id="about" class="editorial-section relative overflow-hidden bg-page">
+  <div class="editorial-grid relative">
+    {/* eyebrow + section label */}
+    <div class="col-span-12 md:col-span-7">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        About / Editorial Doctrine
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        ちよつなとは何か
+      </p>
+    </div>
+
+    {/*
+      H2 を左端まで貫通させ、グリッド破り 1 件を成立（要件 2.2 / 9.3）。
+      右側パディングは保ちつつ、左側マージンで `editorial-grid` の左 padding を相殺する。
+    */}
+    <h2
+      class="font-mincho col-span-12 mt-8 leading-[1.2] tracking-tight text-ink-900"
+      style="grid-column: 1 / -1; margin-left: calc(-1 * clamp(20px, 4vw, 64px)); padding-left: clamp(20px, 4vw, 64px); padding-right: clamp(20px, 4vw, 64px);"
+    >
+      ちよつなは、<br class="sm:hidden" />3つの軸で活動するコミュニティです。
+    </h2>
+
+    <p class="font-gothic col-span-12 mt-10 max-w-2xl text-[15px] leading-[1.9] text-ink-600 md:col-start-2 md:col-span-9">
+      ビジネス × 趣味 × チャリティー。<br />
+      この3つを「あえて混ぜる」ことが、ちよつなの設計思想です。
+    </p>
+
+    {/*
+      3 軸：等幅カードを完全排除。3fr / 2fr / 4fr 相当の非対称列幅 + 縦オフセットの段差配置で
+      編集物的レイアウトを構成（要件 2.2 / 2.3 / 9.6）。各カラムは大番号 + 二重罫 + ラベル + 見出し + 本文。
+    */}
+    <div class="col-span-12 mt-20 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-28">
+      {
+        axes.map((axis, idx) => {
+          const num = String(idx + 1).padStart(2, '0');
+          // 段差配置：col-span / col-start / mt を意図的にずらす
+          const placement =
+            idx === 0
+              ? 'md:col-span-4 md:col-start-1'
+              : idx === 1
+              ? 'md:col-span-3 md:col-start-6 md:mt-12'
+              : 'md:col-span-4 md:col-start-9 md:mt-4';
+          return (
+            <div class={`col-span-12 ${placement}`}>
+              <p
+                class="font-serif-en leading-none text-ink-300"
+                style="font-size: clamp(64px, 9vw, 128px);"
+                aria-hidden="true"
+              >
+                {num}
+              </p>
+              <hr class="editorial-rule-double mt-5 max-w-[160px]" aria-hidden="true" />
+              <p class="font-serif-en mt-6 text-[11px] uppercase tracking-[0.32em] text-brand">
+                {axis.label}
+              </p>
+              <h3 class="font-mincho mt-3 text-3xl tracking-tight text-ink-900 sm:text-4xl">
+                {axis.title}
+              </h3>
+              <p class="font-gothic mt-5 text-[15px] leading-[1.85] text-ink-700">
+                {axis.description}
+              </p>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    {/* なぜ3軸なのか — 編集物的副節 */}
+    <div class="col-span-12 mt-28 md:col-start-2 md:col-span-9 md:mt-36">
+      <hr class="editorial-rule-brush mb-12 w-32" aria-hidden="true" />
+      <h3 class="font-mincho text-2xl tracking-tight text-ink-900 sm:text-3xl md:text-4xl">
+        なぜ3軸なのか？
+      </h3>
+      <p class="font-gothic mt-6 max-w-2xl text-[15px] leading-[1.9] text-ink-700 sm:text-[16px]">
+        7年間、東京で様々なコミュニティを運営してきた中で、私たちは確信しました。
+      </p>
+
+      <ul class="mt-12 flex list-none flex-col gap-8 p-0">
+        {
+          reasons.map((reason, idx) => {
+            const num = String(idx + 1).padStart(2, '0');
+            return (
+              <li class="flex items-start gap-5 border-l border-ink-200 pl-6">
+                <span
+                  class="font-serif-en mt-1 shrink-0 text-[12px] uppercase tracking-[0.18em] text-ink-400"
+                  aria-hidden="true"
+                >
+                  {num}
+                </span>
+                <div>
+                  <span class="font-gothic block text-sm text-ink-500">{reason.title}</span>
+                  <span class="font-mincho mt-1 block text-lg text-ink-900 sm:text-xl">
+                    {reason.accent}
+                  </span>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    {/*
+      クロージング・ダーク・コール：rounded-3xl の典型 UI を排し、角張った
+      bg-surface-dark の編集ブロックに置換。本文は font-mincho の引用調。
+    */}
+    <div
+      class="col-span-12 mt-24 bg-surface-dark p-10 text-white transition-colors duration-500 sm:p-14 md:col-start-2 md:col-span-10 md:mt-32 md:p-16"
+    >
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/55">
+        Doctrine /  立体的信頼
+      </p>
+      <hr class="editorial-rule-double mt-4 max-w-[120px] border-white/40" aria-hidden="true" style="border-color: rgb(255 255 255 / 0.4);" />
+      <p class="font-mincho mt-8 text-2xl leading-[1.6] sm:text-3xl md:text-4xl">
+        3つを混ぜると、人は<span class="text-gold-soft">本当の人格</span>で出会えます。
+      </p>
+      <p class="font-gothic mt-8 text-[15px] leading-[1.95] text-white/80">
+        ゴルフを楽しむ顔。<br />
+        社会貢献に心動かす顔。<br />
+        ビジネスを真剣に動かす顔。
+      </p>
+      <p class="font-mincho mt-10 text-xl leading-[1.7] sm:text-2xl md:text-[28px]">
+        立体的な信頼関係こそが、<br class="sm:hidden" />本物の共創を生むのです。
+      </p>
+    </div>
+  </div>
+</section>

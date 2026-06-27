@@ -1,0 +1,98 @@
+---
+const safeguards = [
+  {
+    icon: '🛡',
+    title: '主催者ホワイトリスト制',
+    body:
+      'すべてのイベント主催者は事前に審査されます。「ちよつな」の名前を借りた怪しいイベントは存在しません。',
+  },
+  {
+    icon: '🟨',
+    title: '強引な勧誘へのカード制',
+    body:
+      'MLM・営業目的の強引な勧誘には、イエローカード・レッドカードを発行。違反者には警告と退会の措置をとります。',
+  },
+  {
+    icon: '🔄',
+    title: '3軸横断で会費が下がる会員制度',
+    body:
+      'ビジネス・趣味・チャリティーの複数イベントに参加する人ほど、会費が下がる仕組み。「本気で関わりたい人」が自然と集まる設計です。',
+  },
+  {
+    icon: '👁',
+    title: '参加履歴の可視化',
+    body:
+      '誰がどんな活動に参加してきたかが見える化されているため、ビジネス目的だけで近づいてくる人は、自然と浮き上がります。',
+  },
+  {
+    icon: '🔗',
+    title: 'ブロックチェーンによる参加証明',
+    body:
+      'イベント参加実績は改ざん不可能な形で記録されます。あなたの活動履歴は、あなた自身の信頼の証として残り続けます。',
+  },
+];
+
+// 5 件の安心要素を非対称・段差配置するためのレイアウト指示。
+// 列幅と縦オフセットを明示的に変えて、card 均等並びを排除する（要件 2.3 / 9.6）。
+const placements = [
+  'md:col-span-5 md:col-start-1',
+  'md:col-span-4 md:col-start-7 md:mt-14',
+  'md:col-span-6 md:col-start-2 md:mt-10',
+  'md:col-span-4 md:col-start-9 md:mt-6',
+  'md:col-span-7 md:col-start-3 md:mt-12',
+];
+---
+
+<section id="trust" class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+  <div class="editorial-grid relative">
+    {/* eyebrow + H2（左揃え） */}
+    <div class="col-span-12 md:col-span-9">
+      <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+        Trust / 仕組みで支える安心
+      </p>
+      <p class="mt-4 inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+        「安心」を、仕組みで実現しています
+      </p>
+      <h2 class="font-mincho mt-6 leading-[1.25] tracking-tight text-ink-900">
+        口先だけの「安心」ではありません。
+      </h2>
+      <hr class="editorial-rule-brush mt-10 max-w-md" aria-hidden="true" />
+      <p class="font-gothic mt-8 max-w-2xl text-[15px] leading-[1.95] text-ink-600">
+        ちよつなは、参加者の質を「人柄」や「主催者の目利き」だけに頼りません。<br />
+        仕組みとして、安心できる場を設計しています。
+      </p>
+    </div>
+
+    {/*
+      5 件のセーフガード：列幅 5 / 4 / 6 / 4 / 7 と縦オフセットを意図的にずらした
+      ステア配置（要件 2.3 / 9.6：均等カード並び排除）。
+      角丸ボタン + 白アイコンの典型 UI を排し、活字記号調の番号 + 二重罫で再構成。
+    */}
+    <div class="col-span-12 mt-20 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-28">
+      {
+        safeguards.map((item, idx) => {
+          const num = String(idx + 1).padStart(2, '0');
+          const place = placements[idx];
+          return (
+            <article class={`col-span-12 ${place}`}>
+              <p
+                class="font-serif-en leading-none text-ink-300"
+                style="font-size: clamp(48px, 6vw, 88px);"
+                aria-hidden="true"
+              >
+                {num}
+              </p>
+              <hr class="editorial-rule-double mt-4 max-w-[100px]" aria-hidden="true" />
+              <h3 class="font-mincho mt-6 text-xl leading-[1.5] tracking-tight text-ink-900 sm:text-2xl">
+                {item.title}
+              </h3>
+              <p class="font-gothic mt-4 text-[15px] leading-[1.85] text-ink-700">
+                {item.body}
+              </p>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
