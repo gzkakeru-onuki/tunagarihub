@@ -1,0 +1,303 @@
+---
+/**
+ * ビジネス / 連携ページ（/business）
+ *
+ * TSUNAGARI HUB project（コミュニティ・共創支援）× 株式会社Geek（AI人材マッチング・
+ * 採用支援）の連携ページ。両者の紹介 → 連携で実現できる価値（人と人／人と企業／人とAI）
+ * → AIシンクロ率マッチング → 相談・サービスへの導線 → 他AI企業との連携、という構成。
+ * ヘッダー右端／フッターの「ビジネス」から遷移する独立ページ。
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PatternSwitcher from '../components/business/PatternSwitcher.astro';
+import { links } from '../lib/links';
+import { orgs, bridges, fields, media } from '../lib/businessContent';
+---
+
+<BaseLayout
+  title="ビジネス｜TSUNAGARI HUB × aisou（株式会社Geek）― AIシンクロ率マッチング"
+  description="TSUNAGARI HUB project のコミュニティ運営・共創支援と、aisou（株式会社Geek提供）の AI人材マッチング・採用支援。理念とAI技術の融合で、人と人・人と企業・人とAIをつなぐ新しい共創を実現します。"
+>
+  <Header />
+  <main>
+    {/* ===================== Hero ===================== */}
+    <section class="editorial-section--lg relative overflow-hidden bg-hero-from text-hero-fg">
+      {/* 3 円モチーフ（人・企業・AI）。index Hero の SVG を意味付けして再構成。 */}
+      <svg
+        class="pointer-events-none absolute right-[5vw] top-[14vh] hidden md:block"
+        width="340"
+        height="300"
+        viewBox="0 0 340 300"
+        aria-hidden="true"
+      >
+        <circle cx="120" cy="110" r="86" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+        <circle cx="220" cy="110" r="86" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+        <circle cx="170" cy="190" r="86" fill="none" stroke="rgb(var(--hero-accent) / 0.45)" stroke-width="1" />
+        <text x="120" y="70" text-anchor="middle" class="font-mincho" style="font-size:22px;" fill="rgb(var(--hero-fg))">人</text>
+        <text x="220" y="70" text-anchor="middle" class="font-mincho" style="font-size:22px;" fill="rgb(var(--hero-fg))">企業</text>
+        <text x="170" y="250" text-anchor="middle" class="font-mincho" style="font-size:22px;" fill="rgb(var(--hero-fg))">AI</text>
+      </svg>
+
+      <div class="editorial-grid relative">
+        <p class="font-serif-en col-span-12 mb-10 text-[11px] uppercase tracking-[0.32em] text-hero-fg/70 md:col-span-8 md:mb-14">
+          Business / Partnership
+          <span class="mx-2 text-hero-fg/35">/</span>
+          <span class="font-mincho normal-case tracking-[0.14em] text-hero-fg/85">
+            TSUNAGARI HUB × aisou
+          </span>
+        </p>
+
+        <h1
+          class="font-mincho col-span-12 leading-[1.1] tracking-tight text-hero-fg"
+          style="grid-column: 1 / -1; font-size: clamp(40px, 6.5vw, 88px);"
+        >
+          <span class="block">人と人、人と企業、</span>
+          <span class="block"><span class="text-hero-accent">人とAI</span>をつなぐ。</span>
+        </h1>
+
+        <p class="font-gothic col-span-12 mt-10 max-w-xl text-[15px] leading-[1.95] text-hero-fg/85 md:col-start-1 md:col-span-8">
+          「人との出会いが人生を豊かにする」という理念に、AIの技術を。<br />
+          コミュニティの信頼と、AIのシンクロ率マッチングが融合する、新しい共創のかたちを、ここから。
+        </p>
+
+        <div class="col-span-12 mt-10 flex flex-col gap-4 md:col-span-9 md:flex-row md:items-stretch">
+          <a
+            href={links.consult}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-gothic inline-flex items-center justify-start gap-3 bg-hero-cta px-8 py-4 text-sm font-semibold text-hero-cta-text shadow-md shadow-hero-cta/30 transition hover:bg-hero-cta-hover sm:text-base"
+          >
+            連携・相談する
+            <span class="text-xs font-normal opacity-80">（企業・個人どちらも）</span>
+          </a>
+          <a
+            href={links.aiMatching}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-gothic inline-flex items-center justify-start gap-3 border border-hero-fg/35 px-8 py-4 text-sm font-semibold text-hero-fg transition hover:border-hero-fg/70 hover:bg-hero-fg/5 sm:text-base"
+          >
+            aisou（AI人材マッチング）を見る
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ===================== 両者の紹介 ===================== */}
+    <section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+      <div class="editorial-grid relative">
+        <div class="col-span-12 md:col-span-9">
+          <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+            Partners / 二つの力
+          </p>
+          <h2 class="font-mincho mt-6 leading-[1.2] tracking-tight text-ink-900">
+            コミュニティの信頼と、<br class="sm:hidden" />AIの知性が、出会う。
+          </h2>
+        </div>
+
+        <div class="col-span-12 mt-16 grid grid-cols-12 gap-x-6 gap-y-16 md:mt-24">
+          {
+            orgs.map((org, idx) => {
+              const place =
+                idx === 0
+                  ? 'md:col-span-6 md:col-start-1'
+                  : 'md:col-span-5 md:col-start-8 md:mt-16';
+              return (
+                <article class={`col-span-12 ${place}`}>
+                  <figure class="editorial-photo mb-7" style="aspect-ratio: 16 / 10;">
+                    <img
+                      src={org.img}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      style="height: 100%; object-fit: cover;"
+                    />
+                  </figure>
+                  <p class="font-serif-en text-[11px] uppercase tracking-[0.3em] text-brand">
+                    {String(idx + 1).padStart(2, '0')} / {org.en}
+                  </p>
+                  <hr class="editorial-rule-double mt-4" aria-hidden="true" />
+                  <h3 class="font-mincho mt-6 text-3xl tracking-tight text-ink-900 sm:text-4xl">
+                    {org.name}
+                  </h3>
+                  <p class="font-serif-en mt-2 text-[12px] tracking-[0.1em] text-ink-400">
+                    {org.sub}
+                  </p>
+                  <p class="font-gothic mt-5 text-[14px] font-semibold tracking-[0.02em] text-brand">
+                    {org.role}
+                  </p>
+                  <p class="font-gothic mt-4 text-[15px] leading-[1.9] text-ink-700">
+                    {org.body}
+                  </p>
+                  <ul class="mt-7 flex list-none flex-col gap-3 p-0">
+                    {
+                      org.points.map((pt) => (
+                        <li class="flex items-start gap-3">
+                          <span class="editorial-mark mt-0.5 shrink-0 text-[11px] text-ink-600" aria-hidden="true">+</span>
+                          <span class="font-gothic text-[14px] leading-[1.7] text-ink-700">{pt}</span>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* ===================== 連携で実現できる価値 ===================== */}
+    <section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+      <div class="editorial-grid relative">
+        <div class="col-span-12 md:col-span-9">
+          <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+            Synergy / 連携で実現できること
+          </p>
+          <h2 class="font-mincho mt-6 leading-[1.2] tracking-tight text-ink-900">
+            出会いを、<span class="text-brand">価値</span>に変える3つのつながり。
+          </h2>
+          <p class="font-gothic mt-8 max-w-2xl text-[15px] leading-[1.9] text-ink-600">
+            両者が連携することで、これまで別々だった「出会いの場」と「AIマッチング」がひとつになります。
+          </p>
+        </div>
+
+        <div class="col-span-12 mt-16 grid grid-cols-12 gap-x-6 gap-y-14 md:mt-24">
+          {
+            bridges.map((b, idx) => {
+              const place =
+                idx === 0
+                  ? 'md:col-span-4 md:col-start-1'
+                  : idx === 1
+                  ? 'md:col-span-4 md:col-start-5 md:mt-12'
+                  : 'md:col-span-4 md:col-start-9 md:mt-4';
+              return (
+                <div class={`col-span-12 ${place}`}>
+                  <figure class="editorial-photo mb-6" style="aspect-ratio: 16 / 10;">
+                    <img src={b.img} alt="" aria-hidden="true" loading="lazy" style="height: 100%; object-fit: cover;" />
+                  </figure>
+                  <p class="font-serif-en text-[11px] uppercase tracking-[0.28em] text-brand">
+                    {b.en}
+                  </p>
+                  <hr class="editorial-rule-double mt-4 max-w-[160px]" aria-hidden="true" />
+                  <h3 class="font-mincho mt-6 text-2xl tracking-tight text-ink-900 sm:text-[28px]">
+                    {b.title}
+                  </h3>
+                  <p class="font-gothic mt-5 text-[15px] leading-[1.85] text-ink-700">
+                    {b.body}
+                  </p>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* ===================== AIシンクロ率マッチング ===================== */}
+    <section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+      <div class="editorial-grid relative">
+        <div
+          class="col-span-12 bg-surface-dark bg-cover bg-center p-10 text-white transition-colors duration-500 sm:p-14 md:col-span-11 md:p-16"
+          style={`background-image: linear-gradient(rgb(var(--surface-dark) / 0.88), rgb(var(--surface-dark) / 0.93)), url('${media.syncBg}');`}
+        >
+          <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-white/55">
+            Synchronization Rate / シンクロ率
+          </p>
+          <hr class="editorial-rule-double mt-4 max-w-[120px]" aria-hidden="true" style="border-color: rgb(255 255 255 / 0.4);" />
+          <h2 class="font-mincho mt-8 text-3xl leading-[1.4] sm:text-4xl md:text-5xl">
+            AIが高める、出会いの<br />
+            <span class="text-gold-soft">「シンクロ率」</span>。
+          </h2>
+          <p class="font-gothic mt-8 max-w-2xl text-[15px] leading-[1.95] text-white/80">
+            相性・価値観・目的のシンクロ率が高いマッチングは、採用だけにとどまりません。
+            ビジネス、趣味、チャリティー、地域活動——あらゆる分野で最適なチームビルディングを可能にし、
+            新たな共創とイノベーションを数多く生み出すきっかけになります。
+          </p>
+          <div class="mt-10 flex flex-wrap gap-3">
+            {
+              fields.map((f) => (
+                <span class="font-gothic border border-white/30 px-4 py-1.5 text-[13px] tracking-[0.04em] text-white/85">
+                  {f}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ===================== 導線 / CTA ===================== */}
+    <section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+      <div class="editorial-grid relative">
+        <div class="col-span-12 md:col-span-9">
+          <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+            Get Started / まずは、つながる
+          </p>
+          <h2 class="font-mincho mt-6 leading-[1.2] tracking-tight text-ink-900">
+            あなたに合う出会いを、<br class="sm:hidden" />AIとともに。
+          </h2>
+          <p class="font-gothic mt-8 max-w-2xl text-[15px] leading-[1.9] text-ink-600">
+            採用・人材をお探しの企業の方も、新しい出会いを求める個人の方も。まずはお気軽にご相談ください。
+          </p>
+        </div>
+
+        <div class="col-span-12 mt-12 flex flex-col gap-4 sm:flex-row md:col-start-1">
+          <a
+            href={links.consult}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-gothic inline-flex items-center justify-center gap-2 bg-brand px-8 py-4 text-sm font-semibold text-white shadow-md shadow-brand/20 transition hover:bg-brand-dark sm:text-base"
+          >
+            お問い合わせ・相談する
+          </a>
+          <a
+            href={links.aiMatching}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-gothic inline-flex items-center justify-center gap-2 border border-ink-300 px-8 py-4 text-sm font-semibold text-ink-800 transition hover:border-ink-800 hover:bg-ink-50 sm:text-base"
+          >
+            aisou（AI人材マッチングサービス）へ
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ===================== 他AI企業との連携 ===================== */}
+    <section class="editorial-section relative overflow-hidden bg-page transition-colors duration-500">
+      <div class="editorial-grid relative">
+        <div class="col-span-12 md:col-start-2 md:col-span-10">
+          <hr class="editorial-rule-brush mb-12 w-32" aria-hidden="true" />
+          <p class="font-serif-en text-[11px] uppercase tracking-[0.32em] text-brand">
+            Open Collaboration / 共に創る仲間へ
+          </p>
+          <h2 class="font-mincho mt-6 text-3xl leading-[1.3] tracking-tight text-ink-900 sm:text-4xl md:text-5xl">
+            AIの力で、より良い未来を共に。
+          </h2>
+          <p class="font-gothic mt-8 max-w-2xl text-[15px] leading-[1.95] text-ink-700">
+            株式会社Geek だけでなく、さまざまなAIクリエイター・AI開発企業の皆様とも積極的に連携していきます。
+            それぞれの強みを掛け合わせ、人と人、人と企業、人とAIをつなぐ新しい共創を広げ、
+            AIの力でより良い社会・より良い未来を共に創っていけたら嬉しいです。
+          </p>
+          <div class="mt-10">
+            <a
+              href={links.consult}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-gothic inline-flex items-center gap-2 border border-ink-300 px-7 py-3.5 text-sm font-semibold text-ink-800 transition hover:border-ink-800 hover:bg-ink-50"
+            >
+              連携・協業のご相談
+            </a>
+          </div>
+
+          <p class="font-mincho mt-20 text-2xl leading-[1.6] tracking-tight text-ink-900 sm:text-3xl md:text-[34px]">
+            人との出会いが、人生を豊かにする。<br />
+            その出会いを、<span class="text-brand">AIとともに</span>。
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <PatternSwitcher current="a" />
+</BaseLayout>

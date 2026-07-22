@@ -1,0 +1,18 @@
+画像クレジット / Image credits
+------------------------------------------------------------
+本ディレクトリの写真は Unsplash（https://unsplash.com/license）より取得。
+Unsplash License：商用・非商用ともに無料で利用可、帰属表示は任意。
+
+用途：ビジネス連携ページ（/business, /business-b, /business-c）の
+      デザイン提案用の仮素材。本番では株式会社Geek／TSUNAGARI HUB の
+      実写素材への差し替えを推奨します。
+
+files:
+  community-group.jpg  … コミュニティ／多様な人々の交流
+  people-meeting.jpg   … 共創・ミーティング
+  coworking-team.jpg   … ワークショップ／チーム
+  diverse-people.jpg   … 多様な人材の協働
+  handshake.jpg        … 連携・パートナーシップ
+  ai-circuit.jpg       … AI・テクノロジー（回路）
+  network-globe.jpg    … ネットワーク・グローバル
+  business-meeting.jpg … 予備（現在未使用）
