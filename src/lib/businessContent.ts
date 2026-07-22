@@ -1,9 +1,7 @@
 /**
  * ビジネス（Geek × TSUNAGARI HUB 連携）ページの共有コンテンツ。
  *
- * デザイン3パターン（/business = A 編集紙面 / /business-b = B システム /
- * /business-c = C 対比スプリット）が同じ事実情報を参照し、レイアウトのみ変える。
- * 見出しコピーは各パターンのトーンに合わせて個別に持つ。
+ * /business ページが参照する事実情報（組織・連携価値・シンクロ率・理念）。
  */
 
 export interface Org {
@@ -104,9 +102,3 @@ export const philosophy = {
   close: '人との出会いが、人生を豊かにする。その出会いを、AIとともに。',
 };
 
-/** デザインパターン一覧（スイッチャー用） */
-export const patterns = [
-  { id: 'a', href: '/business', label: '編集紙面', en: 'Editorial' },
-  { id: 'b', href: '/business-b', label: 'システム', en: 'Systemic' },
-  { id: 'c', href: '/business-c', label: '対比', en: 'Split' },
-] as const;
